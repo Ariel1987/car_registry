@@ -22,7 +22,9 @@ struct Cars {
 	int licensePlateNumbers;
 };
 
-struct Cars *getStructFromFile(int k);
+struct Cars *getStructFromFile(int size);
+int listStruct();
+int displayAllCars();
 int readFile();
 int addCar();
 //int lineCounter();
@@ -40,7 +42,7 @@ int main(void)
 		switch(choice)
 		{
 		case 1:
-			readFile();
+			listStruct();
 			choice = userChoice();
 			break;
 		case 2:
@@ -61,8 +63,7 @@ int main(void)
 	return 0;
 }
 
-int userChoice()
-{
+int userChoice() {
 	int choice = 0;
 
 	printf("\n************Car Registry************\n");
@@ -76,7 +77,30 @@ int userChoice()
 	return choice;
 }
 
-struct Cars *getStructFromFile(int k) {
+int listStruct() {
+	int choice = 0;
+
+	printf("\nChoose how to list the cars\n");
+	printf("1- List all cars\n");
+	printf("2- List cars by manufacturing year\n");
+	printf("3- List cars from a specific manufacturing year\n");
+	printf("4- List cars by model\n");
+	printf("5- Return to menu\n");
+	printf("6- Exit\n");
+	printf("Option: ");
+	scanf("%d", &choice);
+
+	switch(choice) {
+	// list cars on console
+	case 1:
+		displayAllCars();
+		break;
+
+	}
+	return 0;
+}
+
+struct Cars *getStructFromFile(int size) {
 
 	FILE *fp = NULL;
 	fp = fopen(FILENAME, "r");
@@ -89,7 +113,7 @@ struct Cars *getStructFromFile(int k) {
 	// reads file and passes it to structure
 	char token[121];
 	char * item;
-	struct Cars *carList = malloc(sizeof(struct Cars) * k);
+	struct Cars *carList = malloc(sizeof(struct Cars) * size);
 	int index;
 
 	while (fgets(token, 120, fp)) {
@@ -116,6 +140,36 @@ struct Cars *getStructFromFile(int k) {
 	return carList;
 }
 
+int displayAllCars() {
+
+	int size = 3;
+	struct Cars *carList = getStructFromFile(size);
+
+	// sort elements by manufacturing year
+	int i, j, temp;
+	for (i = 0; i < size; i++) {
+		for (j = i + 1; j < size; j++) {
+			if (carList[i].year > carList[j].year) {
+				temp = carList[i].year;
+				carList[i].year = carList[j].year;
+				carList[j].year = temp;
+			}
+		}
+	}
+
+	// display cars
+	for(i = 0; i < size; i++) {
+		printf("\nCar %d\nModel: %s\n", i + 1, carList[i].model);
+		printf("Year: %d\n", carList[i].year);
+		printf("Brand: %s\n", carList[i].brand);
+		printf("License Plate: %s-%d\n", carList[i].licensePlateLetters, carList[i].licensePlateNumbers);
+	}
+	free(carList);
+
+	return 0;
+}
+
+/*
 int readFile()
 {
 	FILE *fp = NULL;
@@ -260,6 +314,7 @@ int readFile()
 
 	return 0;
 }
+*/
 
 int addCar()
 {
