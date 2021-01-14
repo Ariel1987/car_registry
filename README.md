@@ -17,13 +17,13 @@ Choose one of the options bellow:
 
 3- Exit
 
-Option: 1
+Option: 
 
 If you press to list the cars but the file still doesn't exist, you will get a warning and return to the menu
 
 ![](prints-for-git/print2.png)
 
-Pressing "2" to add a car, you will get to choose how many cars to add and prompt the information required (brand, year, model, license plate). 
+Pressing "2" to add a car, you will get to choose how many cars to add and be prompted the information required (brand, year, model, license plate). 
 The file will automatically be created. And return to the main menu.
 
 ![](prints-for-git/print3.png)
@@ -34,7 +34,7 @@ When there is already a file, you can choose how to list the cars. You will then
 
 The first option will simply list the cars in the file displaying it in ascending order from the manufacturing year and return to the main menu
 
-Your second option is to filter and display the list of from a certain year. You will be prompted to give a year. 
+Your second option is to filter and display the list from a certain year. You will be prompted to give a year. 
 After displaying it, the program returns to the main menu 
 
 ![](prints-for-git/print5.png)
