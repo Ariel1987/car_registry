@@ -22,9 +22,10 @@ struct Cars {
 	int licensePlateNumbers;
 };
 
+struct Cars *getStructFromFile(int k);
 int readFile();
 int addCar();
-int lineCounter();
+//int lineCounter();
 int userChoice();
 
 int main(void)
@@ -64,7 +65,7 @@ int userChoice()
 {
 	int choice = 0;
 
-	printf("************Car Registry************\n");
+	printf("\n************Car Registry************\n");
 	printf("Choose one of the options bellow:\n");
 	printf("1- List registered cars\n");
 	printf("2- Add new car\n");
@@ -73,6 +74,46 @@ int userChoice()
 	scanf("%d", &choice);
 
 	return choice;
+}
+
+struct Cars *getStructFromFile(int k) {
+
+	FILE *fp = NULL;
+	fp = fopen(FILENAME, "r");
+
+	if(fp == NULL) {
+		printf("Inexistent file\n\n");
+		main();
+	}
+
+	// reads file and passes it to structure
+	char token[121];
+	char * item;
+	struct Cars *carList = malloc(sizeof(struct Cars) * k);
+	int index;
+
+	while (fgets(token, 120, fp)) {
+		item = strtok(token, " ");
+		strncpy(carList[index].brand, item, sizeof(carList[index].brand));
+
+		item = strtok(NULL, " ");
+		carList[index].year = atoi(item);
+
+		item = strtok(NULL, " ");
+		strncpy(carList[index].model, item, sizeof(carList[index].model));
+
+		item = strtok(NULL, " ");
+		strncpy(carList[index].licensePlateLetters, item, sizeof(carList[index].licensePlateLetters));
+
+		item = strtok(NULL, " ");
+		carList[index].licensePlateNumbers = atoi(item);
+
+		index++;
+	}
+	fclose(fp);
+	fp = NULL;
+
+	return carList;
 }
 
 int readFile()
@@ -117,7 +158,7 @@ int readFile()
 	fp = NULL;
 
 	// user choices
-	printf("Choose how to list the cars\n");
+	printf("\nChoose how to list the cars\n");
 	printf("1- List cars\n");
 	printf("2- List cars by manufacturing year\n");
 	printf("3- List cars from a specific manufacturing year\n");
@@ -266,12 +307,15 @@ int addCar()
 	// puts file on structure
 	for (i = 0; i < insertedNumber; i++)
 	{
-		fprintf(fp, "%s %d %s %s %d\n", carList[i].brand,
+		fprintf(
+				fp,
+				"%s %d %s %s %d\n",
+				carList[i].brand,
 				carList[i].year,
 				carList[i].model,
 				carList[i].licensePlateLetters,
 				carList[i].licensePlateNumbers
-				);
+		);
 	}
 
 	fclose(fp);
@@ -280,8 +324,7 @@ int addCar()
 
 	return 0;
 }
-
-int lineCounter()
+/*int lineCounter()
 {
 	FILE *fp = NULL;
 	char ch;
@@ -291,7 +334,8 @@ int lineCounter()
 
 	if(fp == NULL)
 	{
-		printf("Inexistent file\n");
+		printf("Inexistent file\n\n");
+		main();
 	}
 
 	while((ch = fgetc(fp)) != EOF)
@@ -304,3 +348,4 @@ int lineCounter()
 
 	return lineCounter;
 }
+*/
