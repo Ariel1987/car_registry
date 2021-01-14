@@ -23,11 +23,14 @@ struct Cars {
 };
 
 struct Cars *getStructFromFile(int size);
-int listStruct();
+int choicesToListStruct();
 int displayAllCars();
-int readFile();
+FILE *readFile (char * filename, char * mode);
+int displayCarsByYear();
+int diplayCarFromYear();
+//int readFile();
 int addCar();
-//int lineCounter();
+int lineCounter();
 int userChoice();
 
 int main(void)
@@ -42,7 +45,7 @@ int main(void)
 		switch(choice)
 		{
 		case 1:
-			listStruct();
+			choicesToListStruct();
 			choice = userChoice();
 			break;
 		case 2:
@@ -77,7 +80,7 @@ int userChoice() {
 	return choice;
 }
 
-int listStruct() {
+int choicesToListStruct() {
 	int choice = 0;
 
 	printf("\nChoose how to list the cars\n");
@@ -95,20 +98,45 @@ int listStruct() {
 	case 1:
 		displayAllCars();
 		break;
-
+	case 2:
+		displayCarsByYear();
+		break;
+	case 3:
+		diplayCarFromYear();
+		break;
 	}
 	return 0;
 }
 
-struct Cars *getStructFromFile(int size) {
-
-	FILE *fp = NULL;
-	fp = fopen(FILENAME, "r");
-
+FILE *readFile (char * filename, char * mode) {
+	FILE *fp;
+	fp = fopen(filename, mode);
 	if(fp == NULL) {
 		printf("Inexistent file\n\n");
 		main();
 	}
+	return fp;
+}
+
+int lineCounter()
+{
+	FILE *fp = readFile(FILENAME, "r");
+	char ch;
+	int lineCounter = 0;
+
+	while((ch = fgetc(fp)) != EOF)
+	{
+		if(ch == '\n')
+			lineCounter++;
+	}
+	fclose(fp);
+	fp = NULL;
+
+	return lineCounter;
+}
+
+struct Cars *getStructFromFile(int size) {
+	FILE *fp = readFile(FILENAME, "r");
 
 	// reads file and passes it to structure
 	char token[121];
@@ -142,7 +170,7 @@ struct Cars *getStructFromFile(int size) {
 
 int displayAllCars() {
 
-	int size = 3;
+	int size = lineCounter();
 	struct Cars *carList = getStructFromFile(size);
 
 	// sort elements by manufacturing year
@@ -168,6 +196,50 @@ int displayAllCars() {
 
 	return 0;
 }
+
+int displayCarsByYear() {
+	int size = lineCounter();
+	struct Cars *carList = getStructFromFile(size);
+
+	// search cars by manufacturing year
+	int i, searchedYear;
+	printf("Insert year to search for cars: ");
+	scanf("%d", &searchedYear);
+	printf("\n****Cars Manufactured in %d****\n", searchedYear);
+
+	for(i = 0; i < size; i++) {
+		if(searchedYear == carList[i].year) {
+			printf("\nModel: %s\n", carList[i].model);
+			printf("Year: %d\n", carList[i].year);
+			printf("Brand: %s\n", carList[i].brand);
+			printf("License Plate: %s-%d\n", carList[i].licensePlateLetters, carList[i].licensePlateNumbers);
+		}
+	}
+	free(carList);
+
+	return 0;
+}
+
+int diplayCarFromYear() {
+	int size = lineCounter();
+	struct Cars *carList = getStructFromFile(size);
+	int i, searchedYear;
+
+	// list cars from a certain manufacturing year
+	printf("Insert manufacturing year from which to search for: ");
+	scanf("%d", &searchedYear);
+	for(i = 0; i < size; i++) {
+		if(searchedYear <= carList[i].year) {
+			printf("\nCar Manufactured in %d\nModel: %s\n", carList[i].year, carList[i].model);
+			printf("Year: %d\n", carList[i].year);
+			printf("Brand: %s\n", carList[i].brand);
+			printf("License Plate: %s-%d\n", carList[i].licensePlateLetters, carList[i].licensePlateNumbers);
+		}
+	}
+	free(carList);
+	return 0;
+}
+
 
 /*
 int readFile()
@@ -379,28 +451,4 @@ int addCar()
 
 	return 0;
 }
-/*int lineCounter()
-{
-	FILE *fp = NULL;
-	char ch;
-	int lineCounter = 0;
 
-	fp = fopen(FILENAME, "r");
-
-	if(fp == NULL)
-	{
-		printf("Inexistent file\n\n");
-		main();
-	}
-
-	while((ch = fgetc(fp)) != EOF)
-	{
-		if(ch == '\n')
-			lineCounter++;
-	}
-	fclose(fp);
-	fp = NULL;
-
-	return lineCounter;
-}
-*/
