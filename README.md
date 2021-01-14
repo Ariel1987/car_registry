@@ -5,13 +5,18 @@ This is a program written in C language to register cars into a file.
 The functionalities are displayed in the console. So, to use it you need a code editor with a compiler for C.
 There are also many IDEs that have an embeded compiler.
 
-When you first compile and run the program, a few options will be given
+When you first compile and run the program, a few options will be given:
 
 ************Car Registry************
+
 Choose one of the options bellow:
+
 1- List registered cars
+
 2- Add new car
+
 3- Exit
+
 Option: 1
 
 If you press to list the cars but the file still doesn't exist, you will get a warning and return to the menu
