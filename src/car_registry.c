@@ -22,6 +22,7 @@ struct Cars {
 	int licensePlateNumbers;
 };
 
+int startProgram();
 struct Cars *getStructFromFile(int size);
 int choicesToListStruct();
 int displayAllCars();
@@ -35,15 +36,18 @@ int userChoice();
 
 int main(void)
 {
+	startProgram();
+	return 0;
+}
+
+int startProgram() {
 	int choice = 0;
 	int answer = 1;
 
 	choice = userChoice();
 
-	do
-	{
-		switch(choice)
-		{
+	do {
+		switch(choice) {
 		case 1:
 			choicesToListStruct();
 			choice = userChoice();
@@ -55,8 +59,7 @@ int main(void)
 		case 3:
 			printf("That is it for today! See you soon!");
 			exit(0);
-		break;
-
+			break;
 		default:
 			printf("Inexistent choice\n");
 			break;
@@ -64,6 +67,7 @@ int main(void)
 	} while (answer == 1);
 
 	return 0;
+
 }
 
 int userChoice() {
@@ -94,7 +98,6 @@ int choicesToListStruct() {
 	scanf("%d", &choice);
 
 	switch(choice) {
-	// list cars on console
 	case 1:
 		displayAllCars();
 		break;
@@ -107,8 +110,18 @@ int choicesToListStruct() {
 	case 4:
 		displayCarsByModel();
 		break;
-
+	case 5:
+		startProgram();
+		break;
+	case 6:
+		printf("That is it for today! See you soon!");
+		exit(0);
+		break;
+	default:
+		printf("Inexistent option\n");
+		break;
 	}
+
 	return 0;
 }
 
@@ -265,178 +278,18 @@ int displayCarsByModel() {
 	free(carList);
 	return 0;
 }
-/*
-int readFile()
-{
-	FILE *fp = NULL;
-	fp = fopen(FILENAME, "r");
-
-	int size = lineCounter();
-	struct Cars carList[size];
-	char token[121];
-	char * item;
-	int i = 0, j, temp, choice, searchedYear, searchedYear1;
-	char model[50];
-
-	if (fp == NULL)
-	{
-		perror("Error opening file");
-		return -1;
-	}
-
-	// reads file and passes it to structure
-	while (fgets(token, 120, fp))
-	{
-		item = strtok(token, " ");
-		strncpy(carList[i].brand, item, sizeof(carList[i].brand));
-
-		item = strtok(NULL, " ");
-		carList[i].year = atoi(item);
-
-		item = strtok(NULL, " ");
-		strncpy(carList[i].model, item, sizeof(carList[i].model));
-
-		item = strtok(NULL, " ");
-		strncpy(carList[i].licensePlateLetters, item, sizeof(carList[i].licensePlateLetters));
-
-		item = strtok(NULL, " ");
-		carList[i].licensePlateNumbers = atoi(item);
-
-		i++;
-	}
-	fclose(fp);
-	fp = NULL;
-
-	// user choices
-	printf("\nChoose how to list the cars\n");
-	printf("1- List cars\n");
-	printf("2- List cars by manufacturing year\n");
-	printf("3- List cars from a specific manufacturing year\n");
-	printf("4- List cars by model\n");
-	printf("5- Return to menu\n");
-	printf("6- Exit\n");
-	printf("Option: ");
-	scanf("%d", &choice);
-
-	switch(choice)
-	{
-	// list cars on console
-	case 1:
-		for (i = 0; i < size; i++) {
-			for (j = i + 1; j < size; j++) {
-				if (carList[i].year > carList[j].year) {
-					temp = carList[i].year;
-					carList[i].year = carList[j].year;
-					carList[j].year = temp;
-				}
-			}
-		}
-
-		for(i = 0; i < size; i++)
-		{
-			printf("\nCar %d\nModel: %s\n", i + 1, carList[i].model);
-			printf("Year: %d\n", carList[i].year);
-			printf("Brand: %s\n", carList[i].brand);
-			printf("License Plate: %s-%d\n", carList[i].licensePlateLetters, carList[i].licensePlateNumbers);
-		}
-		break;
-
-	case 2:
-		// search cars by manufacturing year
-		printf("Insert year to search for cars: ");
-		scanf("%d", &searchedYear);
-		printf("\n****Cars Manufactured in %d****\n", searchedYear);
-
-		for(i = 0; i < size; i++)
-		{
-			if(searchedYear == carList[i].year)
-			{
-				printf("\nModel: %s\n", carList[i].model);
-				printf("Year: %d\n", carList[i].year);
-				printf("Brand: %s\n", carList[i].brand);
-				printf("License Plate: %s-%d\n", carList[i].licensePlateLetters, carList[i].licensePlateNumbers);
-			}
-		}
-		break;
-
-	case 3:
-		// list cars from a certain manufacturing year
-		printf("Insert manufacturing year from which to search for: ");
-		scanf("%d", &searchedYear1);
-		for(i = 0; i < size; i++)
-		{
-			if(searchedYear1 <= carList[i].year)
-			{
-				printf("\nCar Manufactured in %d\nModel: %s\n", carList[i].year, carList[i].model);
-				printf("Year: %d\n", carList[i].year);
-				printf("Brand: %s\n", carList[i].brand);
-				printf("License Plate: %s-%d\n", carList[i].licensePlateLetters, carList[i].licensePlateNumbers);
-			}
-		}
-		break;
-
-	// list cars by model
-	case 4:
-		printf("Insert car model to search for: ");
-		scanf("%s", model);
-		for(i = 0; i < size; i++)
-		{
-			if(strncmp(model, carList[i].model, 50) == 0)
-			{
-				printf("Model: %s\n", carList[i].model);
-				printf("Year: %d\n", carList[i].year);
-				printf("Brand: %s\n", carList[i].brand);
-				printf("License Plate: %s-%d\n", carList[i].licensePlateLetters, carList[i].licensePlateNumbers);
-			}
-
-		}
-		break;
-
-	// return to menu
-	case 5:
-		main();
-		break;
-
-	// exit program
-	case 6:
-		printf("That is it for today! See you soon!");
-		exit(0);
-		break;
-
-	default:
-		printf("Inexistent option\n");
-		break;
-	}
-
-	return 0;
-}
-*/
 
 int addCar()
 {
-	FILE *fp = NULL;
-	int i;
+	FILE *fp = readFile(FILENAME, "a");
+
 	int insertedNumber;
-	struct Cars carList[10];
-
-	// puts list on file
-	fp = fopen(FILENAME, "a");
-
-	if (fp == NULL)
-	{
-		perror("Error opening file");
-		return -1;
-	}
-
-	printf("How many cars do you want to insert (less or equal to 10): ");
+	printf("How many cars do you want to insert: ");
 	scanf("%d", &insertedNumber);
 
-	while (insertedNumber > 10)
-	{
-		printf("Write a number less or equal to 10\n");
-		scanf("%d", &insertedNumber);
-	}
+	struct Cars carList[insertedNumber];
 
+	int i;
 	for (i = 0; i < insertedNumber; i++)
 	{
 		printf("\nInsert car brand: ");
