@@ -28,7 +28,7 @@ int displayAllCars();
 FILE *readFile (char * filename, char * mode);
 int displayCarsByYear();
 int diplayCarFromYear();
-//int readFile();
+int displayCarsByModel();
 int addCar();
 int lineCounter();
 int userChoice();
@@ -104,6 +104,10 @@ int choicesToListStruct() {
 	case 3:
 		diplayCarFromYear();
 		break;
+	case 4:
+		displayCarsByModel();
+		break;
+
 	}
 	return 0;
 }
@@ -240,7 +244,27 @@ int diplayCarFromYear() {
 	return 0;
 }
 
+int displayCarsByModel() {
+	int size = lineCounter();
+	struct Cars *carList = getStructFromFile(size);
+	char model[50];
 
+	printf("Insert car model to search for: ");
+	scanf("%s", model);
+	printf("\nCars of the model: %s\n", model);
+
+	int i;
+	for(i = 0; i < size; i++) {
+		if(strncmp(model, carList[i].model, 50) == 0) {
+			printf("Model: %s\n", carList[i].model);
+			printf("Year: %d\n", carList[i].year);
+			printf("Brand: %s\n", carList[i].brand);
+			printf("License Plate: %s-%d\n", carList[i].licensePlateLetters, carList[i].licensePlateNumbers);
+		}
+	}
+	free(carList);
+	return 0;
+}
 /*
 int readFile()
 {
