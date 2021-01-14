@@ -7,17 +7,7 @@ There are also many IDEs that have an embeded compiler.
 
 When you first compile and run the program, a few options will be given
 
-************Car Registry************
-
-Choose one of the options bellow:
-
-1- List registered cars
-
-2- Add new car
-
-3- Exit
-
-Option: 1
+![](prints-for-git/print.png)
 
 If you press to list the cars but the file still doesn't exist, you will get a warning and return to the menu
 
