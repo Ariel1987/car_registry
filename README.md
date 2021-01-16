@@ -1,5 +1,5 @@
-# Car Registry
-### Program to register vehicles to a file
+# Car Registry 
+Program to register vehicles to a file
 
 ## General Info
 
