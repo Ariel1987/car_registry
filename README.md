@@ -1,40 +1,58 @@
-# car_registry
-program to register vehicles to a file
+# Car Registry
+### Program to register vehicles to a file
 
-This is a program written in C language to register cars into a file. 
-The functionalities are displayed in the console. So, to use it you need a code editor with a compiler for C.
-There are also many IDEs that have an embeded compiler.
+## General Info
 
-When you first compile and run the program, a few options will be given:
+This is program registers cars into a file. The user is prompted to register the car to a file giving the following information:
 
-************Car Registry************
+- brand
+- manufacturing year
+- model
+- license plate
 
-Choose one of the options bellow:
+The program also gives different ways to list the cars when reading the file:
 
-1- List registered cars
+- list all cars
+- list cars by year
+- list cars from a certain year
+- list cars by model
 
-2- Add new car
+## Technologies
 
-3- Exit
+- C language
 
-Option: 
+## Setup
 
-If you press to list the cars but the file still doesn't exist, you will get a warning and return to the menu
+To run this program, the user must have a GCC compiler instaled in his IDE. 
+It can be installed following the steps in the [GCC Official Page](https://gcc.gnu.org/install/index.html). 
+For a detailed step-by-step tutorial on how to use the GCC compiler with C see [this article](https://medium.com/@laura.derohan/compiling-c-files-with-gcc-step-by-step-8e78318052).
+
+## Features
+
+When the user first compile and run the program, a few options will be given:
+
+- List registered cars
+
+- Add new car
+
+- Exit
+
+If the user decides to list the cars but the file still doesn't exist, a warning will be shown and return to the menu
 
 ![](prints-for-git/print2.png)
 
-Pressing "2" to add a car, you will get to choose how many cars to add and be prompted the information required (brand, year, model, license plate). 
+Pressing "2" adds a car. the user will get to choose how many cars to add and be prompted the information required (brand, year, model, license plate). 
 The file will automatically be created. And return to the main menu.
 
 ![](prints-for-git/print3.png)
 
-When there is already a file, you can choose how to list the cars. You will then be taken to a secondary menu
+When there is already a file, the user can choose how to list the cars, being taken to a secondary menu
 
 ![](prints-for-git/print4.png)
 
 The first option will simply list the cars in the file displaying it in ascending order from the manufacturing year and return to the main menu
 
-Your second option is to filter and display the list from a certain year. You will be prompted to give a year. 
+The second option is to filter and display the list from a certain year. The user will be prompted to give a year. 
 After displaying it, the program returns to the main menu 
 
 ![](prints-for-git/print5.png)
@@ -43,4 +61,4 @@ The third option also prompts the user with a specific year and displays all car
 
 The fourth option will search and filter cars by model in the same way. 
 
-Finally you can return to the main menu by pressing "5" or exit the program pressing "6" 
+Finally the user can return to the main menu by pressing "5" or exit the program pressing "6" 
