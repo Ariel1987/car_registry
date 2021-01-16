@@ -3,7 +3,7 @@
 
 ## General Info
 
-This is program registers cars into a file. The user is prompted to register the car to a file giving the following information:
+This is program registers cars into a file. The user is prompted to give the following information in order to register the cars:
 
 - brand
 - manufacturing year
